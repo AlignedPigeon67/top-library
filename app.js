@@ -83,7 +83,24 @@ function submitAddBookForm() {
 
     let newBook = new Book(inputTitle.value, inputAuthor.value, parseInt(inputPages.value), readBool);
     addBookToLibrary(newBook);
-    console.table(library);
+}
+
+function clearInputText() {
+    let inputs = addBookBox.querySelectorAll('.add-book-text-input');
+
+    inputs.forEach(e => {
+        if (e.type === 'text') {
+            e.value = '';
+        }
+    });
+}
+
+function clearInputRadio() {
+    let inputs = addBookBox.querySelectorAll('.add-book-radio-input');
+
+    inputs.forEach(e => {
+        if (e.checked) e.checked = false;
+    });
 }
 
 let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
@@ -96,12 +113,23 @@ let horns = new Book('Horns', 'Joe Hill', 329, true);
 addBookToLibrary(horns);
 
 addButton.addEventListener('click', openAddBookForm);
-cancelBookButton.addEventListener('click', closeAddBookForm);
+cancelBookButton.addEventListener('click', () => {
+    clearInputText(addBookBox);
+    clearInputRadio(addBookBox);
+    closeAddBookForm();
+});
 addBookButton.addEventListener('click', () => {
     submitAddBookForm();
+    clearInputText(addBookBox);
+    clearInputRadio(addBookBox);
     clearLibraryCards();
     renderLibraryCards();
     closeAddBookForm();
 });
 
-renderLibraryCards();
+if (library.length === 0) {
+    openAddBookForm();
+}
+else {
+    renderLibraryCards();
+}

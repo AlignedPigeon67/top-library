@@ -62,7 +62,7 @@ body {
 #main-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(var(--main-grid-rows), 1fr);
+    grid-template-rows: auto;
     gap: 3rem 1rem;
     justify-items: center;
     align-items: center;
@@ -140,10 +140,6 @@ body {
 #radio-buttons {
     display: flex;
     justify-content: space-evenly;
-}
-
-#add-book-form input {
-
 }
 
 #add-book-button-container {
