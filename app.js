@@ -1,5 +1,14 @@
 const mainContainer = document.querySelector('#main-container');
+const navBar = document.querySelector('#nav');
 const addButton = document.querySelector('#add-button');
+const addBookContainer = document.querySelector('#add-book-container');
+const addBookBox = document.querySelector('#add-book-box');
+const addBookButton = document.querySelector('#add-book-button');
+const cancelBookButton = document.querySelector('#cancel-book-button');
+const inputTitle = addBookBox.querySelector('#input-title');
+const inputAuthor = addBookBox.querySelector('#input-author');
+const inputPages = addBookBox.querySelector('#input-pages');
+const bookReadBools = document.getElementsByName('read-bool');
 
 let library = [];
 
@@ -14,7 +23,7 @@ function addBookToLibrary(book) {
     library.push(book);
 }
 
-function renderLibrary() {
+function renderLibraryCards() {
     library.forEach(book => {
         let card = document.createElement('div');
         let titleAuthorSpan = document.createElement('span');
@@ -41,6 +50,42 @@ function renderLibrary() {
     });
 }
 
+function clearLibraryCards() {
+    while(mainContainer.lastElementChild) {
+        mainContainer.removeChild(mainContainer.lastElementChild);
+    }
+}
+
+function openAddBookForm() {
+    addBookContainer.classList.remove('hidden');
+    addBookBox.classList.remove('hidden');
+
+    navBar.classList.add('add-book-blur');
+    mainContainer.classList.add('add-book-blur');
+}
+
+function closeAddBookForm() {
+    addBookContainer.classList.add('hidden');
+    addBookBox.classList.add('hidden');
+
+    navBar.classList.remove('add-book-blur');
+    mainContainer.classList.remove('add-book-blur');
+}
+
+function submitAddBookForm() {
+    let readBool;
+
+    bookReadBools.forEach(e => {
+        if (e.checked) {
+            readBool = Boolean(parseInt(e.value));
+        }
+    });
+
+    let newBook = new Book(inputTitle.value, inputAuthor.value, parseInt(inputPages.value), readBool);
+    addBookToLibrary(newBook);
+    console.table(library);
+}
+
 let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
 addBookToLibrary(theHobbit);
 let aGameOfThrones = new Book('A Game of Thrones', 'George R.R. Martin', 798, true);
@@ -50,4 +95,13 @@ addBookToLibrary(paradiseLost);
 let horns = new Book('Horns', 'Joe Hill', 329, true);
 addBookToLibrary(horns);
 
-renderLibrary();
+addButton.addEventListener('click', openAddBookForm);
+cancelBookButton.addEventListener('click', closeAddBookForm);
+addBookButton.addEventListener('click', () => {
+    submitAddBookForm();
+    clearLibraryCards();
+    renderLibraryCards();
+    closeAddBookForm();
+});
+
+renderLibraryCards();

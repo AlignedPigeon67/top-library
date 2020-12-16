@@ -8,13 +8,38 @@
     <script defer src="app.js"></script>
 </head>
 <body>
-    <div class="" id="add-book-container"></div>
-    <div class="" id="add-book-box"></div>
-    <div class="add-book-blur" id="nav">
+    <div class="hidden" id="add-book-container"></div>
+    <div class="hidden" id="add-book-box">
+        <h1 id="add-book-title">Add a Book</h1>
+        <form id="add-book-form">
+            <label for="title">Title:</label>
+            <input type="text" id="input-title" name="title">
+            <label for="author">Author:</label>
+            <input type="text" id="input-author" name="author">
+            <label for="pages">Number of Pages:</label>
+            <input type="text" id="input-pages" name="pages">
+            <label for="read">Read?:</label>
+            <span id="radio-buttons">
+                <span>
+                    <input type="radio" id="input-read" name="read-bool" value="1">
+                    <label for="read-bool">Yes</label>
+                </span>
+                <span>
+                    <input type="radio" id="input-read" name="read-bool" value="0">
+                    <label for="read-bool">No</label>
+                </span>
+            </span>
+        </form>
+        <div id="add-book-button-container">
+            <div class="add-book-main-buttons" id="add-book-button">Add</div>
+            <div class="add-book-main-buttons" id="cancel-book-button">Cancel</div>
+        </div>
+    </div>
+    <div id="nav">
         <h1 id="logo">Library</h1>
         <span class="button" id="add-button">Add</span>
     </div>
-    <div class="add-book-blur" id="main-container">
+    <div id="main-container">
     </div>
 </body>
 </html>
