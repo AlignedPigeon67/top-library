@@ -35,6 +35,11 @@ body {
 
 #logo {
     grid-column-start: 2;
+    letter-spacing: 0.15rem;
+}
+
+#logo i {
+    margin-right: 10px;
 }
 
 .button {
@@ -87,7 +92,11 @@ body {
 .card:hover {
     transition: ease-in-out;
     transform: scale(1.01);
-    box-shadow: 0 0 10px 20px black;
+}
+
+.card-button-container {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .card-button {
@@ -104,13 +113,10 @@ body {
     margin-right: 10px;
     background-color: var(--sec-bg-color);
 
-    transform: rotate(45deg);
-
-    font-size: 2rem;
 }
 
 .card-button:hover {
-    transform: scale(1.05) rotate(45deg);
+    transform: scale(1.05);
     box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }

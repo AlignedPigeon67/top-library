@@ -19,38 +19,49 @@ function Book(title, author, pages, read) {
     this.read = read;
 };
 
+Book.prototype.readSwap = function() {
+    if (this.read) this.read = false;
+    else this.read = true;
+};
+
 function addBookToLibrary(book) {
     library.push(book);
 }
 
 function renderLibraryCards() {
     library.forEach((book, index) => {
-        let card = document.createElement('div');
-        let cardDeleteButton = document.createElement('div');
-        let titleAuthorSpan = document.createElement('span');
-        let cardPages = document.createElement('h2');
-        let cardRead = document.createElement('h2');
-        let cardTitle = document.createElement('h1');
-        let cardAuthor = document.createElement('h3');
+        const card = document.createElement('div');
+        const cardButtonContainer = document.createElement('div');
+        const titleAuthorSpan = document.createElement('span');
+        const cardPages = document.createElement('h2');
+        const cardRead = document.createElement('h2');
+        const cardTitle = document.createElement('h1');
+        const cardAuthor = document.createElement('h3');
+        const deleteIcon = document.createElement('i');
+        const readSwapIcon = document.createElement('i');
 
         card.classList.add('card');
-        cardDeleteButton.classList.add('card-button', 'card-delete');
+        cardButtonContainer.classList.add('card-button-container');
+        deleteIcon.classList.add('card-button', 'card-delete', 'fas', 'fa-times', 'fa-lg');
+        readSwapIcon.classList.add('card-button', 'card-read-swap', 'fas', 'fa-book-open', 'fa-lg');
         titleAuthorSpan.classList.add('card-text', 'title-author-span');
         cardPages.classList.add('card-text', 'card-pages');
         cardRead.classList.add('card-text', 'card-read');
         cardTitle.classList.add('card-title');
         cardAuthor.classList.add('card-author');
+        
+        deleteIcon.setAttribute('data-id', index);
+        readSwapIcon.setAttribute('data-id', index);
 
-        cardDeleteButton.setAttribute('data-id', index);
-
-        cardDeleteButton.innerHTML = '+';
         cardTitle.innerHTML = book.title;
         cardAuthor.innerHTML = book.author;
         cardPages.innerHTML = `${book.pages} Pages`;
         cardRead.innerHTML = `${book.read ? 'Read' : 'Not Read'}`;
 
         mainContainer.append(card);
-        card.append(cardDeleteButton, titleAuthorSpan, cardPages, cardRead);
+        card.append(cardButtonContainer, titleAuthorSpan, cardPages, cardRead);
+        cardButtonContainer.append(deleteIcon, readSwapIcon);
+
         titleAuthorSpan.append(cardTitle, cardAuthor);
     });
 }
@@ -138,10 +149,15 @@ addBookButton.addEventListener('click', () => {
 });
 
 document.addEventListener('click', e => {
-    if (e.target.getAttribute('class') === 'card-button card-delete') {
+    if (e.target.getAttribute('class') === 'card-button card-delete fas fa-times fa-lg') {
         deleteLibraryItem(e.target.getAttribute('data-id'));
         clearLibraryCards();
         renderLibraryCards();   
+    }
+    else if (e.target.getAttribute('class') === 'card-button card-read-swap fas fa-book-open fa-lg') {
+        library[e.target.getAttribute('data-id')].readSwap();
+        clearLibraryCards();
+        renderLibraryCards();
     }
 });
 
